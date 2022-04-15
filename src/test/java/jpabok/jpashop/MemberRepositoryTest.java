@@ -11,8 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.Assert.*;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@RunWith(SpringRunner.class)    // junit에게 spring 테스트 할거라고 알려줌
+@SpringBootTest                 // 스프링 기본적인 테스트 어노테이션
 public class MemberRepositoryTest {
     @Autowired
     MemberRepository memberRepository;
@@ -21,13 +21,19 @@ public class MemberRepositoryTest {
     @Transactional
     @Rollback(false)
     public void testMember() {
+        //given
         Member member = new Member();
         member.setUsername("memberA");
-        Long savedId = memberRepository.save(member);
-        Member findMember = memberRepository.find(savedId);
-        Assertions.assertThat(findMember.getId()).isEqualTo(member.getId());
 
+        //when
+        Long savedId = memberRepository.save(member);       // ctrl + Alt + V  memberRepository.save(member);
+        Member findMember = memberRepository.find(savedId);
+
+        //then
+        Assertions.assertThat(findMember.getId()).isEqualTo(member.getId());
         Assertions.assertThat(findMember.getUsername()).isEqualTo(member.getUsername());
         Assertions.assertThat(findMember).isEqualTo(member); //JPA 엔티티 동일성 보장
+
+        // entity를 통한 모든 데이터 변경은 트렌젝션 안에서 이루어져야한다.
     }
 }

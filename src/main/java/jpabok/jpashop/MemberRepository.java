@@ -9,7 +9,7 @@ import javax.persistence.PersistenceContext;
 public class MemberRepository {
 
     @PersistenceContext
-    private EntityManager em;       // @어노테이션으로 올려두면 EntityManager주입??
+    EntityManager em;       // @어노테이션으로 올려두면 EntityManager주입 <- spring boot가 그냥 매니저 저거 해줌
 
     public Long save(Member member){
         em.persist(member);
